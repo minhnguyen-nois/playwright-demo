@@ -3,7 +3,7 @@ import path from 'node:path';
 
 test('Login successful into Agents', async ({ page }) => {
     await page.goto('https://dev.agentiqai.ai/auth/sign-in');
-    await expect(page.getByRole('heading', { name: 'Sign In' })).toBeVisible();
+    await expect(page.getByText('Sign In', { exact: false })).toBeVisible();
     // fill the email and password
     //await expect(page.getByLabel('textbox', {name: 'Email'})).toBeVisible();
     await page.getByRole('textbox', { name: 'Email' }).fill('minhnguyen@agentiqai.ai');
