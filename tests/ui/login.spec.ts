@@ -11,26 +11,22 @@ test.describe('Authentication Suite', () => {
         // 1. Đi tới trang đăng nhập
         await page.goto(`${config.baseUrl}/auth/sign-in`);
 
-        // 2. Điền thông tin (Playwright tự động chờ field xuất hiện)
-        await page.getByRole('textbox',{name: 'Email'}).fill(user.email);
-        await page.getByRole('textbox',{name: 'Password'}).fill(user.password);
+        // Email & password — use label-based or id/name-based locators
+        await page.getByLabel('Email*').fill(user.email);
+        await page.getByLabel('Password*').fill(user.password);
 
-        // 3. Click nút Sign In
-        // Sử dụng locator mạnh mẽ hơn để tránh lỗi khi nút thay đổi nội dung thành "Signing in..."
-        const signInButton = page.getByRole('button', { name: /Sign In/i });
-        await signInButton.click();
+        // or, if you prefer CSS:
+        await page.locator('#email').fill(user.email);
+        await page.locator('#password').fill(user.password);
+        // or:
+        await page.locator('input[name="email"]').fill(user.email);
+        await page.locator('input[name="password"]').fill(user.password);
 
-        // 4. Xử lý trạng thái chờ (DoD: Đảm bảo chuyển trang thành công)
-        // Playwright sẽ đợi cho đến khi URL thay đổi hoặc hết timeout
-        //await page.waitForURL('**/dashboard', { timeout: 30000 });
+        // Sign in button — your current selector is already good:
+        await page.getByRole('button', { name: 'Sign In' }).click();
 
-        // 5. Assert (Kiểm chứng)
-        // Kiểm tra URL và kiểm tra một thành phần đặc trưng của Dashboard (ví dụ: Sidebar)
-        //await expect(page).toHaveURL(/.*dashboard/);
-        
-        // Ví dụ: Kiểm tra Dashboard có hiển thị chữ "Dashboard" không
-        // await expect(page.getByText('Dashboard')).toBeVisible();
-    });
+
+   });
 
 //     test('Verify error when input the wrong password', async ({ page }) => {
 //         const config = userData.environments.dev;
