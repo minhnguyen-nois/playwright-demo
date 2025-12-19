@@ -1,10 +1,10 @@
 {
   "environments": {
-    "dev": {
-      "baseUrl": "https://dev.agentiqai.ai",
+    "stg": {
+      "baseUrl": "http://catloi-dxfac.indus.nois.vn",
       "admin": {
-        "email": "your-email@agentiqai.ai",
-        "password": "your-password-here"
+        "email": "MINH",
+        "password": "Catloi@123"
       }
     }
   }

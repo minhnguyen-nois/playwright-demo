@@ -29,7 +29,10 @@ export default defineConfig({
   /* Cấu hình chung cho các dự án bên dưới */
   use: {
     // Base URL giúp bạn viết page.goto('/') ngắn gọn hơn
-    baseURL: 'https://dev.agentiqai.ai',
+    baseURL: 'http://catloi-dxfac.indus.nois.vn/',
+
+    //
+    ignoreHTTPSErrors: true,
 
     // Chụp ảnh khi test thất bại (DoD: Bằng chứng lỗi)
     screenshot: 'only-on-failure',
