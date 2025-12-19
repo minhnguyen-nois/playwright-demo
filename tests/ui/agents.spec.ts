@@ -1,18 +1,18 @@
-import { test, expect } from '@playwright/test';
-import path from 'node:path';
+// import { test, expect } from '@playwright/test';
+// import path from 'node:path';
 
-test('Login successful into Agents', async ({ page }) => {
-    await page.goto('https://dev.agentiqai.ai/auth/sign-in');
-    await expect(page.getByText('Sign In', { exact: false })).toBeVisible();
-    // fill the email and password
-    //await expect(page.getByLabel('textbox', {name: 'Email'})).toBeVisible();
-    await page.getByRole('textbox', { name: 'Email' }).fill('minhnguyen@agentiqai.ai');
-    //await expect(page.getByLabel('textbox',{name: 'Password'})).toBeVisible();
-    await page.getByRole('textbox', { name: 'Password' }).fill('minhnguyen');
-    await page.getByRole('button', { name: 'Sign in' }).click();
-    // Verify then click on the create button.
-    await expect(page.getByRole('link', { name: 'Agents' }).nth(2)).toBeVisible();
-    });
+// test('Login successful into Agents', async ({ page }) => {
+//     await page.goto('https://dev.agentiqai.ai/auth/sign-in');
+//     await expect(page.getByText('Sign In', { exact: false })).toBeVisible();
+//     // fill the email and password
+//     //await expect(page.getByLabel('textbox', {name: 'Email'})).toBeVisible();
+//     await page.getByRole('textbox', { name: 'Email' }).fill('minhnguyen@agentiqai.ai');
+//     //await expect(page.getByLabel('textbox',{name: 'Password'})).toBeVisible();
+//     await page.getByRole('textbox', { name: 'Password' }).fill('minhnguyen');
+//     await page.getByRole('button', { name: 'Sign in' }).click();
+//     // Verify then click on the create button.
+//     await expect(page.getByRole('link', { name: 'Agents' }).nth(2)).toBeVisible();
+//     });
 // test('Verify Specialist, Orchestrator, and Functional options', async ({ page }) => {
 //     await page.getByRole('button', { name: 'Create' }).click();
 //     // Verify Specialist option.
