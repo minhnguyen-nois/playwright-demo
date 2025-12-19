@@ -1,7 +1,7 @@
 {
   "environments": {
     "dev": {
-      "baseUrl": "your-project-url-here",
+      "baseUrl": "https://dev.agentiqai.ai/auth/sign-in",
       "admin": {
         "email": "your-email@agentiqai.ai",
         "password": "your-password-here"
