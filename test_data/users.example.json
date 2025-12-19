@@ -1,11 +1,11 @@
 {
   "environments": {
     "dev": {
-      "baseUrl": "https://dev.agentiqai.ai/auth/sign-in",
+      "baseUrl": "https://dev.agentiqai.ai",
       "admin": {
         "email": "your-email@agentiqai.ai",
         "password": "your-password-here"
-      } 
+      }
     }
   }
 }
