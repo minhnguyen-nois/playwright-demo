@@ -1,0 +1,46 @@
+trigger:
+- main
+
+# 1. Thay đổi Pool sang Windows
+pool:
+  vmImage: 'windows-latest' 
+
+steps:
+- checkout: self
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Cài đặt Node.js'
+
+# 2. Trên Windows, sử dụng lệnh 'cmd' hoặc 'powershell' (mặc định của script task)
+- script: npm ci
+  displayName: 'Cài đặt thư viện sạch (npm ci)'
+
+# 3. Cài đặt trình duyệt Playwright
+- script: npx playwright install --with-deps chromium
+  displayName: 'Cài đặt Chromium Browser'
+
+# 4. Chạy Test và xuất báo cáo
+# Thêm biến môi trường CI=true để Playwright biết đang chạy trên server
+- script: npx playwright test
+  displayName: 'Thực thi Playwright Tests'
+  env:
+    CI: 'true'
+    ADMIN_PASSWORD: $(admin_password)
+
+# 5. Xuất kết quả lên Azure DevOps Tab Test
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'results.xml'
+  condition: succeededOrFailed()
+
+# 6. Lưu lại HTML Report và Video/Trace khi lỗi
+- task: PublishPipelineArtifact@1
+  displayName: 'Lưu trữ Playwright Artifacts'
+  inputs:
+    targetPath: 'playwright-report'
+    artifact: 'playwright-results'
+  condition: succeededOrFailed()

@@ -1,0 +1,60 @@
+# Chiến lược Kiểm thử Tự động (Automation Strategy)
+
+Tài liệu này định nghĩa kiến trúc, quy trình và các tiêu chuẩn kỹ thuật cho dự án Automation Test sử dụng **Playwright TypeScript**.
+
+---
+
+## 1. Kiến trúc Framework & Design Pattern
+
+Áp dụng kiến trúc đa tầng để đảm bảo tính tái sử dụng và dễ bảo trì:
+
+* **Design Pattern (Mô hình thiết kế):** * **Page Object Model (POM):** Mỗi trang web (Login, Dashboard) sẽ là một Class riêng. Logic tìm phần tử (Selectors) và hành động (Actions) được tách biệt hoàn toàn khỏi script kiểm thử.
+    * **Functional Library:** Các hàm dùng chung (format date, xử lý chuỗi) được đặt trong thư mục `utils/`.
+* **Cấu trúc thư mục:** Tách biệt rõ ràng giữa `tests/` (kịch bản), `test_data/` (dữ liệu), và `simulators/` (giả lập).
+
+## 2. Quản lý Trạng thái (State Management)
+
+Để tối ưu hóa thời gian chạy và đạt tiêu chuẩn **Definition of Done (DoD)** về hiệu suất:
+
+* **Storage State (Global Setup):** Thay vì đăng nhập lại cho mỗi bài test, chúng ta thực hiện đăng nhập một lần, lưu Session/Cookies vào file JSON và tái sử dụng cho tất cả các bài test sau đó.
+* **Isolation (Tính cô lập):** Mỗi bài test chạy trong một `BrowserContext` riêng biệt, đảm bảo không có dữ liệu rác (cache/cookies) ảnh hưởng lẫn nhau.
+
+## 3. Chiến lược Kiểm thử Đa trình duyệt & Thiết bị (Cross-Browser & Device)
+
+* **Trình duyệt:** Mặc định chạy trên **Chromium** (cho tốc độ). Định kỳ chạy trên **Firefox** và **Webkit (Safari)** để đảm bảo tính tương thích.
+* **Thiết bị (Emulation):** Sử dụng tính năng giả lập của Playwright để kiểm thử trên các khung hình Mobile (iPhone 14, Pixel 7) và Tablet.
+* **Viewports:** Kiểm tra giao diện ở các độ phân giải khác nhau (1280x720, 1920x1080).
+
+## 4. Quản lý Tính thiếu ổn định (Flakiness Management)
+
+Flakiness (test lúc pass lúc fail), xử lý bằng:
+
+* **Auto-waiting:** Tận dụng cơ chế tự động đợi của Playwright thay vì dùng `sleep` cứng.
+* **Retries (Thử lại):** Cấu hình tự động chạy lại bài test tối đa 2 lần trên CI nếu gặp lỗi do mạng hoặc server phản hồi chậm.
+* **Soft Assertions:** Sử dụng `expect.soft` cho các kiểm tra không trọng yếu để bài test tiếp tục chạy ngay cả khi một bước nhỏ gặp lỗi.
+
+## 5. Tích hợp CI/CD & Trace Viewer
+
+* **CI/CD (GitHub Actions/Azure Pipelines):** Tự động kích hoạt toàn bộ test suite mỗi khi có `Pull Request` hoặc `Push` vào nhánh chính.
+* **Trace Viewer integration:** * Khi một bài test thất bại trên CI, hệ thống sẽ tự động đính kèm file **Trace.zip**. 
+    * Trace bao gồm: Video quay lại màn hình, Screenshot từng bước, và Log mạng (Network call) để debug chính xác tại sao nút "Signing in..." bị kẹt.
+
+## 6. Định nghĩa Hoàn thành (Definition of Done - DoD)
+
+Một bài test được coi là "Hoàn thành" khi và chỉ khi:
+1.  **Code Quality:** Không có dữ liệu viết chết (Hard-coded), tất cả lấy từ `test_data/`.
+2.  **Assertive:** Phải có ít nhất một bước kiểm chứng kết quả (expect).
+3.  **Documentation:** Có ghi chú rõ ràng về mục đích của bài test.
+4.  **Stable:** Chạy thành công 5 lần liên tiếp trên máy cục bộ trước khi đẩy lên Git.
+5.  **Green CI:** Toàn bộ test suite phải vượt qua các bài kiểm tra tự động trên Pipeline.
+
+---
+
+## Mục đích & Tiêu chí trước khi triển khai
+
+| Tiêu chí | Mục đích |
+| :--- | :--- |
+| **Phủ sóng (Coverage)** | Đảm bảo các luồng quan trọng (Login, Dashboard) luôn hoạt động. |
+| **Tốc độ (Speed)** | Cung cấp phản hồi cho Dev trong vòng dưới 10 phút. |
+| **Tin cậy (Reliability)** | Tỷ lệ lỗi giả (False Positive) phải dưới 1%. |
+| **Bảo trì (Maintainability)** | Thời gian sửa script khi giao diện đổi phải dưới 30 phút. |

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "path": {
+      "@simulators/*": ["simulators/*"],
+      "@data/*": ["test_data/*"]
+    },
+    /* Các dòng quan trọng để fix lỗi import JSON */
+    "resolveJsonModule": true,
+    "allowJs": true
+  },
+  "include": [
+    "tests/**/*",
+    "playwright.config.ts",
+    "test_data/**/*",
+    "simulators/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

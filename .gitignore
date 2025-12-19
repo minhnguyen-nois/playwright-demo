@@ -1,8 +1,22 @@
-
-# Playwright
+# Dependencies
 node_modules/
+
+# Playwright Test Outputs
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Environment and Secrets (QUAN TRỌNG)
+.env
+test_data/users.json
+
+# IDEs
+.idea/
+.vscode/
+
+# Python (Dành cho script trong thư mục scripts/)
+__pycache__/
+*.py[cod]
+*$py.class

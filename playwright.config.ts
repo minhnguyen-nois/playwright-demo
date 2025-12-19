@@ -1,79 +1,70 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * See https://playwright.dev/docs/test-configuration.
+ * Xem hướng dẫn cấu hình chi tiết tại:
+ * https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+  // Đường dẫn đến thư mục chứa các bài test của bạn
   testDir: './tests',
-  /* Run tests in files in parallel */
+  
+  // Chạy các test trong các file song song để tiết kiệm thời gian
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  
+  // Ngăn chặn việc quên lệnh test.only khi đẩy code lên CI
   forbidOnly: !!process.env.CI,
-  /* Retry on CI only */
+  
+  // Tự động chạy lại (retry) 2 lần trên CI nếu test bị lỗi (Flakiness Management)
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
+  
+  // Giới hạn số lượng worker trên CI để tránh quá tải hệ thống
   workers: process.env.CI ? 1 : undefined,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+  
+  // Sử dụng cả báo cáo HTML và JUnit (để hiển thị kết quả trên Azure DevOps Tab Test)
+  reporter: [
+    ['html'],
+    ['junit', { outputFile: 'results.xml' }]
+  ],
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+  /* Cấu hình chung cho các dự án bên dưới */
+  use: {
+    // Base URL giúp bạn viết page.goto('/') ngắn gọn hơn
+    baseURL: 'https://dev.agentiqai.ai',
+
+    // Chụp ảnh khi test thất bại (DoD: Bằng chứng lỗi)
+    screenshot: 'only-on-failure',
+
+    // Quay video khi test thất bại để dễ dàng debug
+    video: 'retain-on-failure',
+
+    // Lưu lại Trace khi có lỗi (Rất quan trọng để xem lại luồng đăng nhập)
+    trace: 'retain-on-failure',
+    
+    // Tự động chờ các phần tử (Auto-wait) trong tối đa 10 giây
+    actionTimeout: 10000,
   },
 
-  /* Configure projects for major browsers */
+  /* Cấu hình chạy trên các trình duyệt khác nhau */
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
-    /* Test against mobile viewports. */
+    // /* Giả lập thiết bị di động (Tùy chọn) */
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
     // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
