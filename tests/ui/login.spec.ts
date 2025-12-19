@@ -43,4 +43,4 @@ test.describe('Authentication Suite', () => {
 //         // Kiểm tra thông báo lỗi xuất hiện (thay thế selector phù hợp với web của bạn)
 //         // await expect(page.locator('.error-message')).toBeVisible();
 //     });
-// });
+});
