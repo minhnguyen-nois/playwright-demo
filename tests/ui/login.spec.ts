@@ -1,55 +1,103 @@
 import { test, expect } from '@playwright/test';
 
-// Nạp dữ liệu từ file JSON bạn đã tạo
 
 import * as userData from '../../test_data/users.example.json';
 
-test.describe('Authentication Suite', () => {
+test.describe('Login with valid credentials', () => {
 
   test('successfully login with admin account', async ({ page }) => {
 
     const config = userData.environments.stg;
-
     const user = config.admin;
 
-    // 1. Đi tới trang đăng nhập
-
+    // 1. Go to login page
     await page.goto(config.baseUrl, { waitUntil: 'networkidle' });
 
-    // Đảm bảo trang login thực sự được render
+    // Make sure login page is really rendered
+    await expect(page
+    .getByText('ĐĂNG NHẬP TÀI KHOẢN CỦA BẠN')).toBeVisible();
 
-    await expect(page.getByText('ĐĂNG NHẬP TÀI KHOẢN CỦA BẠN')).toBeVisible();
-
-    // 2. Điền thông tin đăng nhập bằng các input có autocomplete
-
-    const emailInput = page.locator('input[autocomplete="username"]');
-    const passwordInput = page.locator('input[autocomplete="current-password"]');
+    // 2. Input login's information
+    const emailInput = page
+    .locator('input[autocomplete="username"]');
+    const passwordInput = page
+    .locator('input[autocomplete="current-password"]');
     await emailInput.fill(user.email);
     await passwordInput.fill(user.password);
 
-    // 3. Click nút ĐĂNG NHẬP
-
+    // 3. Click Sign in button
     await page.getByRole('button', { name: 'ĐĂNG NHẬP' }).click();
 
-    // (Tuỳ bạn: thêm assert sau khi đăng nhập thành công)
+    //Verify after successfully sign in
+    await page.waitForURL('**/portal**', { timeout: 15000 });
+    await page.waitForLoadState('load');
+
+    const factoryTitle = page.getByText(/KHATOCO KHANH HOA CIGARETTE FACTORY/i);
+    await expect(factoryTitle).toBeVisible({ timeout: 10000 });
+
+    const dxFactoryLink = page
+    .getByRole('link', {name: /DxFACTORY Trang quản trị hệ thống/i});
+    await expect(dxFactoryLink).toBeVisible({timeout: 10000});
+    await dxFactoryLink.focus();
+    await expect(dxFactoryLink).toBeFocused();
+
+    const dxMPMLink = page
+    .getByRole('link', {name: /DxMPM Trang quản lý sản xuất DxMPM/i});
+    await expect(dxMPMLink).toBeVisible({timeout: 10000});
+    await dxMPMLink.focus();
+    await expect(dxMPMLink).toBeFocused();
 
   });
 
-  // test('Verify error when input the wrong password', async ({ page }) => {
+  test('Verify error when input the wrong username', async ({ page }) => {
 
-  //   const config = userData.environments.dev;
+    const config = userData.environments.stg;
+    const user = config.admin;
 
-  //   await page.goto(`${config.baseUrl}/auth/sign-in`);
+    await page.goto(config.baseUrl, { waitUntil: 'networkidle' });
 
-  //   await page.fill('input[name="email"]', 'minhnguyen@gmail.com');
+    await expect(page
+    .getByText('ĐĂNG NHẬP TÀI KHOẢN CỦA BẠN')).toBeVisible();
 
-  //   await page.fill('input[name="password"]', '123456789');
+    const emailInput = page
+    .locator('input[autocomplete="username"]');
+    const passwordInput = page
+    .locator('input[autocomplete="current-password"]');
+    await emailInput.fill("minhnguyen@gmail.com");
+    await passwordInput.fill(user.password);
 
-  //   await page.click('button:has-text("Sign In")');
+    await page.getByRole('button', { name: 'ĐĂNG NHẬP' }).click();
 
-  //   // await expect(page.locator('.error-message')).toBeVisible();
+    const errorMessage = page.locator('.fuse-alert-message');
+    await expect(errorMessage).toBeVisible();
+    await expect(errorMessage).toContainText('Người dùng đăng nhập sai');
 
-  // });
+  });
+
+  test('Verify error when inputing wrong password', async ({ page }) => {
+
+    const config = userData.environments.stg;
+    const user = config.admin;
+
+    await page.goto(config.baseUrl, { waitUntil: 'networkidle' });
+
+    await expect(page
+    .getByText('ĐĂNG NHẬP TÀI KHOẢN CỦA BẠN')).toBeVisible();
+
+    const emailInput = page
+    .locator('input[autocomplete="username"]');
+    const passwordInput = page
+    .locator('input[autocomplete="current-password"]');
+    await emailInput.fill("user.email");
+    await passwordInput.fill('1234567789');
+
+    await page.getByRole('button', { name: 'ĐĂNG NHẬP' }).click();
+
+    const errorMessage = page.locator('.fuse-alert-message');
+    await expect(errorMessage).toBeVisible();
+    await expect(errorMessage).toContainText('Người dùng đăng nhập sai');
+
+  });
 
 });
 
