@@ -1,10 +1,10 @@
 {
   "environments": {
     "stg": {
-      "baseUrl": "http://catloi-dxfac.indus.nois.vn",
+      "baseUrl": "http://khatoco-dxfac.indus.nois.vn",
       "admin": {
         "email": "MINH",
-        "password": "Catloi@123"
+        "password": "Khatoco@123"
       }
     }
   }

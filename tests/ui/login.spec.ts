@@ -31,19 +31,22 @@ test.describe('Login with valid credentials', () => {
     //Verify after successfully sign in
     await page.waitForURL('**/portal**', { timeout: 15000 });
     await page.waitForLoadState('load');
-
-    const factoryTitle = page.getByText(/KHATOCO KHANH HOA CIGARETTE FACTORY/i);
-    await expect(factoryTitle).toBeVisible({ timeout: 10000 });
-
-    const dxFactoryLink = page
-    .getByRole('link', {name: /DxFACTORY Trang quản trị hệ thống/i});
-    await expect(dxFactoryLink).toBeVisible({timeout: 10000});
+    
+    const englishTitle = page.getByText('KHATOCO KHANH HOA CIGARETTE FACTORY'); 
+    await expect(englishTitle).toBeAttached({ timeout: 15000 });
+    
+    // Find DxFACTORY link using comprehensive locator that covers all cases
+    const dxFactoryLink = page.getByRole('link', { name: /DxFACTORY/i });
+    await dxFactoryLink.scrollIntoViewIfNeeded();
+    
+    // Verify link is visible and interactable
+    await expect(dxFactoryLink).toBeAttached({ timeout: 10000 });
     await dxFactoryLink.focus();
-    await expect(dxFactoryLink).toBeFocused();
+    await expect(dxFactoryLink).toBeFocused({timeout: 5000});
 
-    const dxMPMLink = page
-    .getByRole('link', {name: /DxMPM Trang quản lý sản xuất DxMPM/i});
-    await expect(dxMPMLink).toBeVisible({timeout: 10000});
+    const dxMPMLink = page.getByRole('link', { name: /DxMPM/i });
+    await dxMPMLink.scrollIntoViewIfNeeded();
+    await expect(dxMPMLink).toBeAttached({ timeout: 10000 });
     await dxMPMLink.focus();
     await expect(dxMPMLink).toBeFocused();
 

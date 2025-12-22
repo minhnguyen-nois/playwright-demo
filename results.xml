@@ -1,9 +1,9 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="6.971491000000002">
-<testsuite name="ui\login.spec.ts" timestamp="2025-12-19T10:37:34.258Z" hostname="chromium" tests="1" failures="0" skipped="0" time="3.681" errors="0">
-<testcase name="Authentication Suite › successfully login with admin account" classname="ui\login.spec.ts" time="3.681">
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="5.851952000000514">
+<testsuite name="ui\login.spec.ts" timestamp="2025-12-22T05:29:12.788Z" hostname="chromium" tests="1" failures="0" skipped="0" time="3.224" errors="0">
+<testcase name="Login with valid credentials › successfully login with admin account" classname="ui\login.spec.ts" time="3.224">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|test-results\ui-login-Authentication-Su-0a515-ly-login-with-admin-account-chromium\trace.zip]]
+[[ATTACHMENT|test-results\ui-login-Login-with-valid--bbcc2-ly-login-with-admin-account-chromium\trace.zip]]
 ]]>
 </system-out>
 </testcase>
