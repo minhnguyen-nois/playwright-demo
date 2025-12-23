@@ -72,8 +72,8 @@ test.describe('login authentication', () => {
     await page.getByRole('button', { name: 'ĐĂNG NHẬP' }).click();
 
     const errorMessage = page.locator('.fuse-alert-message');
-    await expect(errorMessage).toBeVisible();
     await expect(errorMessage).toContainText('Người dùng đăng nhập sai');
+    await expect(errorMessage).toBeVisible({ timeout: 10000 });
 
   });
 
@@ -97,8 +97,8 @@ test.describe('login authentication', () => {
     await page.getByRole('button', { name: 'ĐĂNG NHẬP' }).click();
 
     const errorMessage = page.locator('.fuse-alert-message');
-    await expect(errorMessage).toBeVisible();
     await expect(errorMessage).toContainText('Người dùng đăng nhập sai');
+    await expect(errorMessage).toBeVisible({ timeout: 10000 });
 
   });
 

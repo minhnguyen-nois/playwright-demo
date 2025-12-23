@@ -1,14 +1,25 @@
-<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="30.723751">
-<testsuite name="integration\loginapi.spec.ts" timestamp="2025-12-23T04:10:07.601Z" hostname="firefox" tests="1" failures="0" skipped="0" time="18.885" errors="0">
-<testcase name="Integration Test - Login Flow › Successfully login with valid credential with mock API" classname="integration\loginapi.spec.ts" time="18.885">
+<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="10.72257800000001">
+<testsuite name="ui\login.spec.ts" timestamp="2025-12-23T04:30:53.620Z" hostname="chromium" tests="3" failures="0" skipped="0" time="21.585" errors="0">
+<testcase name="login authentication › Successfully login with admin account" classname="ui\login.spec.ts" time="7.512">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\ui-login-login-authenticat-3ffbc-ly-login-with-admin-account-chromium\trace.zip]]
+]]>
+</system-out>
 </testcase>
-</testsuite>
-<testsuite name="ui\login.spec.ts" timestamp="2025-12-23T04:10:07.601Z" hostname="firefox" tests="3" failures="0" skipped="0" time="76.878" errors="0">
-<testcase name="login authentication › Successfully login with admin account" classname="ui\login.spec.ts" time="27.882">
+<testcase name="login authentication › Verify error when inputing the wrong username" classname="ui\login.spec.ts" time="6.962">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\ui-login-login-authenticat-30d06-inputing-the-wrong-username-chromium\trace.zip]]
+]]>
+</system-out>
 </testcase>
-<testcase name="login authentication › Verify error when inputing the wrong username" classname="ui\login.spec.ts" time="23.104">
-</testcase>
-<testcase name="login authentication › Verify error when inputing the wrong password" classname="ui\login.spec.ts" time="25.892">
+<testcase name="login authentication › Verify error when inputing the wrong password" classname="ui\login.spec.ts" time="7.111">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\ui-login-login-authenticat-2c1ff-inputing-the-wrong-password-chromium\trace.zip]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
 </testsuites>
