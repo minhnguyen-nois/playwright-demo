@@ -29,7 +29,7 @@ export default defineConfig({
   /* Cấu hình chung cho các dự án bên dưới */
   use: {
     // Base URL giúp bạn viết page.goto('/') ngắn gọn hơn
-    baseURL: 'http://catloi-dxfac.indus.nois.vn/',
+    baseURL: 'http://khatoco-dxfac.indus.nois.vn/',
 
     //
     ignoreHTTPSErrors: true,

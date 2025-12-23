@@ -3,9 +3,9 @@ import { test, expect } from '@playwright/test';
 
 import * as userData from '../../test_data/users.example.json';
 
-test.describe('Login with valid credentials', () => {
+test.describe('login authentication', () => {
 
-  test('successfully login with admin account', async ({ page }) => {
+  test('Successfully login with admin account', async ({ page }) => {
 
     const config = userData.environments.stg;
     const user = config.admin;
@@ -52,7 +52,7 @@ test.describe('Login with valid credentials', () => {
 
   });
 
-  test('Verify error when input the wrong username', async ({ page }) => {
+  test('Verify error when inputing the wrong username', async ({ page }) => {
 
     const config = userData.environments.stg;
     const user = config.admin;
@@ -77,7 +77,7 @@ test.describe('Login with valid credentials', () => {
 
   });
 
-  test('Verify error when inputing wrong password', async ({ page }) => {
+  test('Verify error when inputing the wrong password', async ({ page }) => {
 
     const config = userData.environments.stg;
     const user = config.admin;
